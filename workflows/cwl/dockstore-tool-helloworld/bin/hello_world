@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euf -o pipefail
+
+TEMPLATE=$(cat ${1})
+INPUT=$(cat ${2})
+
+printf "$TEMPLATE" $INPUT > helloworld.txt

@@ -1,0 +1,10 @@
+{
+    "template_file": {
+        "class": "File",
+        "path": "template.txt"
+    },
+    "input_file": {
+        "class": "File",
+        "path": "input.txt"
+    }
+}
