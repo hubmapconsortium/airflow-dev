@@ -1,4 +1,5 @@
 airflow.cfg
+**/test-output-actual
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
