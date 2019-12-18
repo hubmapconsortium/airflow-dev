@@ -7,7 +7,7 @@ from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from airflow.operators.python_operator import PythonOperator
 
-from .utils import PIPELINE_BASE_DIR, clone_or_update_pipeline
+from utils import PIPELINE_BASE_DIR, clone_or_update_pipeline
 
 default_args = {
     'owner': 'mruffalo',
