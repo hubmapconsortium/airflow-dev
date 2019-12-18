@@ -1,27 +1,19 @@
-"""
-Code that goes along with the Airflow tutorial located at:
-https://github.com/apache/airflow/blob/master/airflow/example_dags/tutorial.py
-
-"""
 from datetime import datetime, timedelta
-from os import environ, fspath
+from os import fspath
 from pathlib import Path
 import shlex
 
-# The DAG object; we'll need this to instantiate a DAG
 from airflow import DAG
-# Operators; we need this to operate!
 from airflow.operators.bash_operator import BashOperator
+from airflow.operators.python_operator import PythonOperator
 
-# BaseOperator parameters
-# https://airflow.apache.org/code.html#airflow.models.BaseOperator
-# Could likewise define a different set of args for different purposes...
-# ...such as dev_args or production_args
+from .utils import PIPELINE_BASE_DIR, clone_or_update_pipeline
+
 default_args = {
     'owner': 'mruffalo',
     'depends_on_past': False,
     'start_date': datetime(2019, 1, 1),
-    'email': ['blood@psc.edu'],
+    'email': ['mruffalo@cs.cmu.edu'],
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,
@@ -47,18 +39,18 @@ dag = DAG(
 )
 
 pipeline_name = 'salmon-rnaseq'
-pipeline_directory = Path(environ['AIRFLOW_HOME']) / pipeline_name
 
-clone = BashOperator(
-    task_id='git_clone',
-    bash_command=f'git clone https://github.com/hubmapconsortium/{pipeline_name}',
+prepare_pipeline = PythonOperator(
+    python_callable=clone_or_update_pipeline,
+    task_id='clone_or_update_pipeline',
+    op_kwargs={'pipeline_name': pipeline_name},
     dag=dag,
 )
 
 command = [
     'cwltool',
     '--parallel',
-    fspath(pipeline_directory / 'pipeline.cwl'),
+    fspath(PIPELINE_BASE_DIR / pipeline_name / 'pipeline.cwl'),
     '--fastq_r1',
     fspath(FASTQ_R1),
     '--fastq_r2',
@@ -75,4 +67,4 @@ pipeline_exec = BashOperator(
     dag=dag,
 )
 
-clone >> pipeline_exec
+prepare_pipeline >> pipeline_exec
