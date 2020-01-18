@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -o errexit
+set -o pipefail
 
 start() { echo travis_fold':'start:$1; echo $1; }
 end() { echo travis_fold':'end:$1; }
