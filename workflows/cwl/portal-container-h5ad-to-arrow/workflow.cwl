@@ -2,7 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
-baseCommand: ['bash', '-c', 'ls > out.csv']
+baseCommand: ['python', '/main.py']
 hints:
   DockerRequirement:
     dockerPull: hubmap/portal-container-h5ad-to-arrow:0.0.1
