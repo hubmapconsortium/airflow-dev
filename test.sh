@@ -7,11 +7,12 @@ die() { set +v; echo "$*" 1>&2 ; sleep 1; exit 1; }
 
 CWL_NAME=workflow.cwl
 OUTPUT_NAME=test-output-actual
-for CWL_PATH in workflows/cwl/*/workflow.cwl; do
+for CWL_PATH in $PWD/workflows/cwl/*/workflow.cwl; do
   cd `dirname $CWL_PATH`
   LABEL=`basename $PWD`
   start $LABEL
-  mkdir $OUTPUT_NAME || echo 'Output directory already exists...'
+  rm -rf $OUTPUT_NAME
+  mkdir $OUTPUT_NAME
   cd $OUTPUT_NAME
   ../$CWL_NAME ../test-job.yml
   cd ..

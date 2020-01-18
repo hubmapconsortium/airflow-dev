@@ -2,7 +2,7 @@
 
 cwlVersion: v1.0
 class: CommandLineTool
-baseCommand: ./main.py
+baseCommand: ['bash', '-c', 'ls > out.csv']
 hints:
   DockerRequirement:
     dockerPull: hubmap/portal-container-h5ad-to-arrow:0.0.1
@@ -12,7 +12,15 @@ inputs:
     inputBinding:
         position: 1
 outputs:
-  output_directory:
-    type: Directory
+  csv:
+    type: File
     outputBinding:
-      glob: '*'
+      glob: '*.csv'
+#  arrow:
+#    type: File
+#    outputBinding:
+#      glob: '*.arrow'
+#  json:
+#    type: File
+#    outputBinding:
+#      glob: '*.json'
