@@ -67,4 +67,10 @@ salmon_rnaseq_pipeline_exec = BashOperator(
     dag=dag,
 )
 
-prepare_pipeline >> salmon_rnaseq_pipeline_exec
+todo_h5ad_to_arrow_pipeline_exec = BashOperator(
+    task_id='h5ad_to_arrow_pipeline_exec',
+    bash_command='echo "Waiting for my cwl to be merged..."',
+    dag=dag
+)
+
+prepare_pipeline >> salmon_rnaseq_pipeline_exec >> todo_h5ad_to_arrow_pipeline_exec
