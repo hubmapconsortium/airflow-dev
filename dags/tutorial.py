@@ -32,23 +32,23 @@ default_args = {
 
 # Instantiate a DAG
 dag = DAG(
-    'test', default_args = default_args, schedule_interval = timedelta(days = 1))
+    'test', default_args=default_args, schedule_interval=timedelta(days=1))
 
 # Tasks are generated when instantiating operator objects
 # By precedence they use:
 # 1. explicitly passed arguments,
 # 2. default_args
-# 3. Operator defaults 
+# 3. Operator defaults
 t1 = BashOperator(
-    task_id = 'print_date',
-    bash_command = 'date',
-    dag = dag)
+    task_id='print_date',
+    bash_command='date',
+    dag=dag)
 
 t2 = BashOperator(
-    task_id = 'sleep',
-    bash_command = 'sleep 5',
-    retries = 3,
-    dag = dag)
+    task_id='sleep',
+    bash_command='sleep 5',
+    retries=3,
+    dag=dag)
 
 # Airflow leverages Jinja templating
 # http://jinja.pocoo.org/docs/dev/
@@ -62,20 +62,20 @@ templated_command = """
 """
 
 t3 = BashOperator(
-    task_id = 'templated',
-    bash_command = templated_command,
-    params = {'my_param': 'Parameter I passed in!'},
-    dag = dag)
+    task_id='templated',
+    bash_command=templated_command,
+    params={'my_param': 'Parameter I passed in!'},
+    dag=dag)
 
 t1.set_downstream(t2)
 t1.set_downstream(t3)
 
 # This means that t2 will depend on t1...
 # ...running successfully to run.
-#t1.set_downstream(t2)
+# t1.set_downstream(t2)
 
 # This is equivalent to:
-#t2.set_upstream(t1)
+# t2.set_upstream(t1)
 
 # The bit shift operator can also be
 # used to chain operations:
@@ -95,7 +95,3 @@ t1.set_downstream(t3)
 #t1.set_downstream([t2, t3])
 #t1 >> [t2, t3]
 #[t2, t3] << t1
-
-
-
-

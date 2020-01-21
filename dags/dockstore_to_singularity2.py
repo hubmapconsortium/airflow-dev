@@ -31,31 +31,35 @@ default_args = {
 }
 
 # Instantiate a DAG
-dag = DAG('dockstore_singularity2', default_args = default_args, schedule_interval = None, max_active_runs = 1)
+dag = DAG(
+    'dockstore_singularity2',
+    default_args=default_args,
+    schedule_interval=None,
+    max_active_runs=1)
 
 t1 = BashOperator(
-    task_id = 'print_date2',
-    bash_command = 'date',
-    dag = dag) 
+    task_id='print_date2',
+    bash_command='date',
+    dag=dag)
 
 t2 = BashOperator(
-    task_id = 'rm2',
-    bash_command = 'if [ -f ~/helloworld.txt ]; then rm ~/helloworld.txt; fi; if [ -f ~/dockstore-tool-helloworld_1.0.2.sif ]; then rm ~/dockstore-tool-helloworld_1.0.2.sif; fi',
-    dag = dag)
+    task_id='rm2',
+    bash_command='if [ -f ~/helloworld.txt ]; then rm ~/helloworld.txt; fi; if [ -f ~/dockstore-tool-helloworld_1.0.2.sif ]; then rm ~/dockstore-tool-helloworld_1.0.2.sif; fi',
+    dag=dag)
 
 t3 = BashOperator(
-    task_id = 'singularity_pull2',
-    bash_command = 'singularity pull ~/dockstore-tool-helloworld_1.0.2.sif docker://quay.io/ga4gh-dream/dockstore-tool-helloworld:1.0.2',
-    dag = dag)
+    task_id='singularity_pull2',
+    bash_command='singularity pull ~/dockstore-tool-helloworld_1.0.2.sif docker://quay.io/ga4gh-dream/dockstore-tool-helloworld:1.0.2',
+    dag=dag)
 
 t4 = BashOperator(
-    task_id = 'singularity_exec2',
-    bash_command = 'singularity exec ~/dockstore-tool-helloworld_1.0.2.sif hello_world ~/template.txt ~/words.txt; mv helloworld.txt ~/',
-    dag = dag)
+    task_id='singularity_exec2',
+    bash_command='singularity exec ~/dockstore-tool-helloworld_1.0.2.sif hello_world ~/template.txt ~/words.txt; mv helloworld.txt ~/',
+    dag=dag)
 
 t5 = BashOperator(
-    task_id = 'cat2',
-    bash_command = 'cat ~/helloworld.txt',
-    dag = dag)
+    task_id='cat2',
+    bash_command='cat ~/helloworld.txt',
+    dag=dag)
 
 t1 >> t2 >> t3 >> t4 >> t5

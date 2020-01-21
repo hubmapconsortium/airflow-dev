@@ -21,6 +21,7 @@ GIT_CHECKOUT_COMMAND = [
     '{ref}',
 ]
 
+
 def clone_or_update_pipeline(pipeline_name: str, ref: str = 'origin/master'):
     """
     Ensure that a Git clone of a specific pipeline exists inside the
