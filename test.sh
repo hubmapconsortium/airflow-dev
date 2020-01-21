@@ -24,5 +24,11 @@ done
 popd
 
 for DAG in dags/*.py; do
-  echo $DAG
+  if [ "$DAG" = 'dags/cwl_to_dag.py' ] # https://github.com/hubmapconsortium/airflow-dev/issues/24
+  then
+    echo "Skipping $DAG ..."
+    continue
+  fi
+  python $DAG
+  echo "$DAG parses!"
 done

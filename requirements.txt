@@ -1,3 +1,4 @@
-apache-airflow==1.10.7
+apache-airflow==1.10.6
+cwl-airflow==1.1.11
 cwlref-runner==1.0
 cwltool==1.0.20191206125148
