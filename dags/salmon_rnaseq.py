@@ -47,7 +47,7 @@ prepare_pipeline = PythonOperator(
     dag=dag,
 )
 
-command = [
+salmon_rnaseq_command = [
     'cwltool',
     '--parallel',
     fspath(PIPELINE_BASE_DIR / pipeline_name / 'pipeline.cwl'),
@@ -59,12 +59,12 @@ command = [
     str(THREADS),
 ]
 
-command_str = ' '.join(shlex.quote(piece) for piece in command)
+salmon_rnaseq_command_str = ' '.join(shlex.quote(piece) for piece in salmon_rnaseq_command)
 
-pipeline_exec = BashOperator(
-    task_id='pipeline_exec',
-    bash_command=command_str,
+salmon_rnaseq_pipeline_exec = BashOperator(
+    task_id='salmon_rnaseq_pipeline_exec',
+    bash_command=salmon_rnaseq_command_str,
     dag=dag,
 )
 
-prepare_pipeline >> pipeline_exec
+prepare_pipeline >> salmon_rnaseq_pipeline_exec
