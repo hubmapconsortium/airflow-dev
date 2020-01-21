@@ -36,7 +36,7 @@ dag = DAG('dockstore_singularity', default_args = default_args, schedule_interva
 t1 = BashOperator(
     task_id = 'print_date',
     bash_command = 'date',
-    dag = dag) 
+    dag = dag)
 
 t2 = BashOperator(
     task_id = 'rm',
