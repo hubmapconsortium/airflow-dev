@@ -22,3 +22,7 @@ for CWL_PATH in workflows/cwl/*/workflow.cwl; do
 done
 
 popd
+
+for DAG in dags/*.py; do
+  echo $DAG
+done
