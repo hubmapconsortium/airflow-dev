@@ -8,8 +8,8 @@ dag.add(CWLJobDispatcher(dag=dag), to='top')
 dag.add(CWLJobGatherer(dag=dag), to='bottom')
 
 
-#from cwl_airflow import CWLDAG, CWLJobDispatcher, CWLJobGatherer
-#from datetime import timedelta
+# from cwl_airflow import CWLDAG, CWLJobDispatcher, CWLJobGatherer
+# from datetime import timedelta
 
 # def cwl_workflow(workflow_file):
 #    dag = CWLDAG(default_args={
