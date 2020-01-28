@@ -1,2 +1,3 @@
+cwl-airflow==1.1.11
 cwlref-runner==1.0
-cwltool==1.0.20191206125148
+cwltool==1.0.20190831161204
