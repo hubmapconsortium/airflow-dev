@@ -26,6 +26,7 @@ default_args = {
 
 # Hardcoded parameters for first Airflow execution
 DATA_DIRECTORY = Path('/hive/hubmap/data/CMU_Tools_Testing_Group/salmon-rnaseq')
+OUTDIR = Path('/hive/users/blood/workflow/cwl-airflow/data/rnaseq/10x/test1')
 FASTQ_R1 = DATA_DIRECTORY / 'L001_R1_001_r.fastq.gz'
 FASTQ_R2 = DATA_DIRECTORY / 'L001_R2_001_r.fastq.gz'
 THREADS = 6
@@ -50,6 +51,8 @@ prepare_pipeline = PythonOperator(
 command = [
     'cwltool',
     '--parallel',
+    '--outdir',
+    fspath(OUTDIR),
     fspath(PIPELINE_BASE_DIR / pipeline_name / 'pipeline.cwl'),
     '--fastq_r1',
     fspath(FASTQ_R1),
