@@ -9,6 +9,8 @@ start() { echo travis_fold':'start:$1; echo "$green$1$reset"; }
 end() { set +v; echo travis_fold':'end:$1; echo; echo; }
 die() { set +v; echo "$red$*$reset" 1>&2 ; exit 1; }
 
+pushd .
+
 CWL_NAME=workflow.cwl
 OUTPUT_NAME=test-output-actual
 for CWL_PATH in $PWD/workflows/cwl/*/workflow.cwl; do
@@ -27,4 +29,16 @@ for CWL_PATH in $PWD/workflows/cwl/*/workflow.cwl; do
     | head -n100 | cut -c 1-100
 
   end $LABEL
+done
+
+popd
+
+for DAG in dags/*.py; do
+  if [ "$DAG" = 'dags/cwl_to_dag.py' ] # https://github.com/hubmapconsortium/airflow-dev/issues/24
+  then
+    echo "Skipping $DAG ..."
+    continue
+  fi
+  python $DAG
+  echo "$DAG parses!"
 done
