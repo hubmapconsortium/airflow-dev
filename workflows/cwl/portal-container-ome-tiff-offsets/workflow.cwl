@@ -13,6 +13,10 @@ inputs:
     inputBinding:
         position: 6
 outputs:
+  tif_initial:
+    type: File
+    outputBinding:
+      glob: 'compressed/*.ome.tif'
   tif:
     type: File
     outputBinding:
