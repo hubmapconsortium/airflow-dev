@@ -13,11 +13,11 @@ inputs:
     inputBinding:
         position: 6
 outputs:
-  csv:
+  tif:
     type: File
     outputBinding:
-      glob: '*.ome.tif*'
-  json:
+      glob: '*.ome.tif'
+  xml:
     type: File
     outputBinding:
       glob: '*.ome.xml'
